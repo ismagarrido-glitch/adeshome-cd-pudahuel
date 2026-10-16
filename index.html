@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adeshome Chile | Optimización Despacho Omnicanal & Control CD Pudahuel</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QR Code Generator library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            accent: {
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- HEADER GLOBAL -->
+  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-brand-500 text-slate-950 font-black px-2.5 py-1.5 rounded-xl text-sm flex items-center justify-center shadow">
+          ADESHOME
+        </div>
+        <div>
+          <h1 class="font-bold text-base md:text-lg leading-tight">Optimización Despacho Omnicanal — CD Pudahuel</h1>
+          <p class="text-xs text-slate-400 hidden sm:block">Control Operativo & Medición de Desempeño Peak (Cyber & Navidad)</p>
+        </div>
+      </div>
+
+      <!-- Selector de Modo/Vista -->
+      <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700">
+        <button id="btn-view-admin" onclick="switchView('admin')" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all bg-brand-500 text-slate-950 shadow">
+          <i data-lucide="bar-chart-3" class="inline w-3.5 h-3.5 mr-1"></i> Dashboard Estratégico
+        </button>
+        <button id="btn-view-driver" onclick="switchView('driver')" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all text-slate-300 hover:text-white">
+          <i data-lucide="smartphone" class="inline w-3.5 h-3.5 mr-1"></i> Ingreso RUT Express (Móvil)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+    <!-- ==================== VISTA 1: DASHBOARD ESTRATÉGICO Y DE DATOS DUROS ==================== -->
+    <div id="view-admin" class="space-y-8">
+
+      <!-- HERO / OBJETIVO DEL PROYECTO -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden border border-slate-700">
+        <div class="relative z-10 max-w-4xl">
+          <span class="inline-block bg-brand-500/20 text-brand-400 border border-brand-500/30 font-semibold text-xs px-3 py-1 rounded-full mb-3">
+            Hallazgos Ishikawa & Continuidad Operativa Sin Detener el CD
+          </span>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2">
+            Optimización del Rendimiento de Despacho en Peaks de Demanda
+          </h2>
+          <p class="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed">
+            Proyecto enfocado en resolver los cuellos de botella detectados en el CD Adeshome-Chile mediante la estandarización de medidores clave (OTIF, ciclo por pedido, costo por pedido y ocupación) durante CyberDays y Navidad.
+          </p>
+
+          <!-- Tarjetas KPI Línea Base vs Meta -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div class="bg-slate-800/90 p-3 md:p-4 rounded-xl border border-slate-700">
+              <p class="text-xs text-slate-400 font-medium">OTIF (Línea Base vs Meta)</p>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="text-lg md:text-xl font-bold text-red-400">80,9%</span>
+                <span class="text-xs text-slate-400">➔</span>
+                <span class="text-lg md:text-xl font-bold text-emerald-400">≥ 96%</span>
+              </div>
+            </div>
+            <div class="bg-slate-800/90 p-3 md:p-4 rounded-xl border border-slate-700">
+              <p class="text-xs text-slate-400 font-medium">Costo por Pedido</p>
+              <p class="text-lg md:text-xl font-bold text-amber-400 mt-1">$7.920 CLP</p>
+            </div>
+            <div class="bg-slate-800/90 p-3 md:p-4 rounded-xl border border-slate-700">
+              <p class="text-xs text-slate-400 font-medium">Ciclo Promedio por Pedido</p>
+              <p class="text-lg md:text-xl font-bold text-blue-400 mt-1">41,8 Horas</p>
+            </div>
+            <div class="bg-slate-800/90 p-3 md:p-4 rounded-xl border border-slate-700">
+              <p class="text-xs text-slate-400 font-medium">Ocupación del CD</p>
+              <p class="text-lg md:text-xl font-bold text-purple-400 mt-1">96,4%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 1: ANÁLISIS PRESUPUESTARIO Y SOBREGASTOS PEAK (OBJ 1 & OBJ 3) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Gráfico Desviación Presupuestaria por Mes -->
+        <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex justify-between items-center mb-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-base">Evaluación Mensual: Presupuesto vs Real (Jul 2025 - Jun 2026)</h3>
+              <p class="text-xs text-slate-500">Gasto real superó lo presupuestado en +5,9% ($16.765 MM vs $15.836 MM)</p>
+            </div>
+            <span class="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-full font-bold">Sobregastos Peak</span>
+          </div>
+          <div class="h-64 relative">
+            <canvas id="budgetChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Hallazgos Clave Objetivos 1 y 3 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i> Concentración de Sobregastos
+            </h3>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              Las auditorías de flujo confirman que las desviaciones presupuestarias no son homogéneas en el año, sino que se gatillan críticamente en los picos de demanda:
+            </p>
+            <div class="space-y-3">
+              <div class="p-3 bg-red-50 rounded-xl border border-red-200 flex justify-between items-center text-xs">
+                <div>
+                  <p class="font-bold text-red-900">Noviembre (Cyber)</p>
+                  <p class="text-red-700 text-[11px]">Inicio de alta demanda</p>
+                </div>
+                <span class="text-base font-black text-red-600">+22,3%</span>
+              </div>
+              <div class="p-3 bg-red-50 rounded-xl border border-red-200 flex justify-between items-center text-xs">
+                <div>
+                  <p class="font-bold text-red-900">Diciembre (Navidad)</p>
+                  <p class="text-red-700 text-[11px]">Peak de entregas e-commerce</p>
+                </div>
+                <span class="text-base font-black text-red-600">+21,8%</span>
+              </div>
+              <div class="p-3 bg-red-50 rounded-xl border border-red-200 flex justify-between items-center text-xs">
+                <div>
+                  <p class="font-bold text-red-900">Junio (Cierre / Peak)</p>
+                  <p class="text-red-700 text-[11px]">Saturación de almacenamiento</p>
+                </div>
+                <span class="text-base font-black text-red-600">+26,2%</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-4 italic">
+            *Fuera de estos 3 meses la variación presupuestaria se mantiene controlada entre -4,7% y +3,2%.
+          </p>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: PRODUCTIVIDAD PERSONAL Y ÚLTIMA MILLA (OBJ 4 & OBJ 5) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Objetivo 4: Evaluación de Personal -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+              <i data-lucide="users" class="w-5 h-5 text-brand-600"></i> Productividad y Sobregasto en Personal
+            </h3>
+            <span class="text-xs bg-slate-100 px-2.5 py-1 rounded-md font-mono font-bold text-slate-700">+$439,1 MM (+7,3%)</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-4">
+            Mano de obra regular concentra el <strong class="text-slate-900">89,5% ($392,8 MM)</strong> del sobregasto total de personal debido a la incorporación no planificada durante picos.
+          </p>
+          <div class="h-52 relative">
+            <canvas id="staffChart"></canvas>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-4 text-center text-[11px]">
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-slate-800">+32,6%</span>
+              <span class="text-slate-500">Personal Nov</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-slate-800">+23,1%</span>
+              <span class="text-slate-500">Personal Dic</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-slate-800">+28,1%</span>
+              <span class="text-slate-500">Personal Jun</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objetivo 5: Última Milla y Saturación de Rutas -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+              <i data-lucide="truck" class="w-5 h-5 text-accent-600"></i> Desempeño Última Milla & Rutas
+            </h3>
+            <span class="text-xs bg-slate-100 px-2.5 py-1 rounded-md font-mono font-bold text-slate-700">+$287,6 MM (+5,9%)</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-4">
+            El seguimiento semanal muestra un sobrecosto por saturación de rutas de distribución durante los meses de alta demanda:
+          </p>
+          <div class="h-52 relative">
+            <canvas id="lastMileChart"></canvas>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-4 text-center text-[11px]">
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-blue-600">+17,5%</span>
+              <span class="text-slate-500">Costo Nov</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-blue-600">+27,2%</span>
+              <span class="text-slate-500">Costo Dic</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border">
+              <span class="block font-bold text-blue-600">+33,4%</span>
+              <span class="text-slate-500">Costo Jun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: CONTROL DE ANDENES Y REGISTRO EN TIEMPO REAL -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-5 h-5 text-brand-600"></i>
+              Control de Ocupación y Andenes en Tiempo Real (CD Pudahuel)
+            </h3>
+            <p class="text-xs text-slate-500">Monitoreo para evitar cuellos de botella en despacho y recepción</p>
+          </div>
+          <button onclick="generateGaritaQR()" class="inline-flex items-center gap-2 text-xs font-semibold bg-slate-900 text-white px-3 py-2 rounded-lg hover:bg-slate-800 transition">
+            <i data-lucide="qr-code" class="w-4 h-4"></i> Generar QR para Garita / Teléfono
+          </button>
+        </div>
+
+        <!-- Matriz de Andenes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" id="docks-container">
+          <!-- Generado Dinámicamente por JS -->
+        </div>
+
+        <!-- Tabla Registro Reciente -->
+        <div class="mt-8">
+          <h4 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <i data-lucide="list" class="w-4 h-4 text-slate-500"></i> Registros Directos Recientes (Ingreso por RUT Express)
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold">
+                <tr>
+                  <th class="p-3">RUT Operador / Chofer</th>
+                  <th class="p-3">Área de Trabajo</th>
+                  <th class="p-3">Patente / ID</th>
+                  <th class="p-3">Andén / Zona</th>
+                  <th class="p-3">Estado</th>
+                  <th class="p-3">Hora Registro</th>
+                </tr>
+              </thead>
+              <tbody id="logs-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+                <!-- Se llena con JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== VISTA 2: APP INGRESO EXPRESS (MOBILE-FIRST) ==================== -->
+    <div id="view-driver" class="hidden max-w-md mx-auto">
+      
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+        <!-- Banner Conductor / Operador -->
+        <div class="bg-slate-900 p-6 text-white text-center relative">
+          <span class="bg-brand-500 text-slate-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-2 inline-block">Uso Rápido & Eficiente</span>
+          <h2 class="text-xl font-black">Ingreso Directo CD Pudahuel</h2>
+          <p class="text-xs text-slate-400 mt-1">Sin registros largos. Ingresa con tu RUT y selecciona tu área.</p>
+        </div>
+
+        <div class="p-6 space-y-5">
+          <!-- Formulario Directo -->
+          <form id="driver-form" onsubmit="handleDriverRegister(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">1. Tu RUT / DNI</label>
+              <div class="relative">
+                <input type="text" id="driver-rut" required placeholder="12.345.678-9" class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm font-semibold outline-none transition">
+                <i data-lucide="id-card" class="w-5 h-5 text-slate-400 absolute left-3 top-3.5"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">2. Área de Trabajo en el CD</label>
+              <div class="relative">
+                <select id="driver-area" required class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm font-semibold outline-none transition bg-white">
+                  <option value="">Selecciona área...</option>
+                  <option value="Despacho Omnicanal (Cyber/Navidad)">Despacho Omnicanal (Cyber/Navidad)</option>
+                  <option value="Recepción & Staging Inbound">Recepción & Staging Inbound</option>
+                  <option value="Picking & Preparación de Pedidos">Picking & Preparación de Pedidos</option>
+                  <option value="Última Milla - Flota Reparto">Última Milla - Flota Reparto</option>
+                </select>
+                <i data-lucide="map-pin" class="w-5 h-5 text-slate-400 absolute left-3 top-3.5"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">3. Patente / Identificador de Carga</label>
+              <div class="relative">
+                <input type="text" id="driver-plate" required placeholder="ABCD-12 / PED-890" class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm font-semibold uppercase outline-none transition">
+                <i data-lucide="truck" class="w-5 h-5 text-slate-400 absolute left-3 top-3.5"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 active:scale-98 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-600/30 transition flex items-center justify-center gap-2 text-sm">
+              <i data-lucide="check-circle" class="w-5 h-5"></i>
+              REGISTRAR Y OBTENER PASER DIGITAL
+            </button>
+          </form>
+
+          <!-- Ticket Digital Generado -->
+          <div id="driver-ticket" class="hidden bg-slate-50 rounded-2xl p-5 border-2 border-brand-500/30 text-center space-y-4">
+            <div class="inline-flex p-2 bg-emerald-100 text-emerald-800 rounded-full">
+              <i data-lucide="check-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                ¡Acceso Confirmado!
+              </span>
+              <h3 class="text-xl font-black text-slate-900 mt-2" id="ticket-dock-assigned">Andén # --</h3>
+              <p class="text-xs text-slate-500" id="ticket-info">RUT: -- | ÁREA: --</p>
+            </div>
+
+            <div class="bg-white p-3 rounded-xl shadow-inner inline-block mx-auto border border-slate-200">
+              <div id="qrcode-ticket" class="flex justify-center"></div>
+              <p class="text-[10px] text-slate-400 mt-2 font-mono">Escanea en el lector de garita</p>
+            </div>
+
+            <button onclick="resetDriverForm()" class="text-xs font-semibold text-slate-500 underline block mx-auto">
+              Realizar nuevo ingreso
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL QR ACCESO RÁPIDO -->
+  <div id="modal-qr" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl">
+      <h3 class="font-bold text-slate-900 text-lg">QR Acceso Móvil Garita</h3>
+      <p class="text-xs text-slate-500">Escanea desde tu smartphone para abrir directamente la app de ingreso por RUT en tu pantalla.</p>
+      
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex justify-center">
+        <div id="garita-qr-container"></div>
+      </div>
+
+      <button onclick="closeModalQR()" class="w-full py-2.5 bg-slate-200 text-slate-800 font-bold text-xs rounded-xl hover:bg-slate-300 transition">
+        Cerrar
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LÓGICA & GRÁFICOS CON DATOS REALES DEL INFORME -->
+  <script>
+    lucide.createIcons();
+
+    // Estado inicial de Andenes CD Pudahuel
+    const docks = [
+      { id: 'Andén 01 (Despacho)', status: 'ocupado', rut: '14.821.990-2', patente: 'HV-8812', area: 'Despacho Omnicanal', time: '09:15' },
+      { id: 'Andén 02 (Despacho)', status: 'libre', rut: '', patente: '', area: '', time: '' },
+      { id: 'Andén 03 (Recepción)', status: 'ocupado', rut: '18.331.004-K', patente: 'CP-1029', area: 'Recepción & Staging', time: '10:05' },
+      { id: 'Andén 04 (Última Milla)', status: 'libre', rut: '', patente: '', area: '', time: '' }
+    ];
+
+    function switchView(view) {
+      const adminView = document.getElementById('view-admin');
+      const driverView = document.getElementById('view-driver');
+      const btnAdmin = document.getElementById('btn-view-admin');
+      const btnDriver = document.getElementById('btn-view-driver');
+
+      if (view === 'admin') {
+        adminView.classList.remove('hidden');
+        driverView.classList.add('hidden');
+        btnAdmin.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition-all bg-brand-500 text-slate-950 shadow";
+        btnDriver.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition-all text-slate-300 hover:text-white";
+      } else {
+        adminView.classList.add('hidden');
+        driverView.classList.remove('hidden');
+        btnDriver.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition-all bg-brand-500 text-slate-950 shadow";
+        btnAdmin.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition-all text-slate-300 hover:text-white";
+      }
+    }
+
+    function renderDocks() {
+      const container = document.getElementById('docks-container');
+      const tableBody = document.getElementById('logs-table-body');
+      container.innerHTML = '';
+      tableBody.innerHTML = '';
+
+      docks.forEach((dock, index) => {
+        const isFree = dock.status === 'libre';
+        
+        const dockCard = document.createElement('div');
+        dockCard.className = `p-4 rounded-xl border-2 transition ${
+          isFree 
+            ? 'bg-emerald-50/50 border-emerald-300/60 text-emerald-950' 
+            : 'bg-slate-50 border-slate-300 text-slate-800'
+        }`;
+
+        dockCard.innerHTML = `
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-extrabold text-sm">${dock.id}</span>
+            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+              isFree ? 'bg-emerald-200 text-emerald-800' : 'bg-slate-200 text-slate-700'
+            }">
+              ${dock.status}
+            </span>
+          </div>
+          <div class="text-xs space-y-1 my-3">
+            <p><span class="text-slate-400">RUT:</span> ${dock.rut || '---'}</p>
+            <p><span class="text-slate-400">Patente/ID:</span> ${dock.patente || '---'}</p>
+          </div>
+          <button onclick="toggleDock(${index})" class="w-full text-xs font-bold py-1.5 rounded-lg transition ${
+            isFree 
+              ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
+              : 'bg-slate-200 hover:bg-slate-300 text-slate-700'
+          }">
+            ${isFree ? 'Asignar Registro' : 'Liberar Zona'}
+          </button>
+        `;
+        container.appendChild(dockCard);
+
+        if (!isFree) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="p-3 font-semibold">${dock.rut}</td>
+            <td class="p-3">${dock.area}</td>
+            <td class="p-3 uppercase">${dock.patente}</td>
+            <td class="p-3 font-bold text-brand-700">${dock.id}</td>
+            <td class="p-3"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[10px] font-bold">Operando</span></td>
+            <td class="p-3 text-slate-400">${dock.time} hrs</td>
+          `;
+          tableBody.appendChild(row);
+        }
+      });
+    }
+
+    function toggleDock(index) {
+      if (docks[index].status === 'libre') {
+        docks[index].status = 'ocupado';
+        docks[index].rut = '15.902.112-3';
+        docks[index].patente = 'EXPRESS-01';
+        docks[index].area = 'Despacho Omnicanal';
+        docks[index].time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      } else {
+        docks[index].status = 'libre';
+        docks[index].rut = '';
+        docks[index].patente = '';
+        docks[index].area = '';
+        docks[index].time = '';
+      }
+      renderDocks();
+    }
+
+    function handleDriverRegister(event) {
+      event.preventDefault();
+      const rut = document.getElementById('driver-rut').value;
+      const plate = document.getElementById('driver-plate').value;
+      const area = document.getElementById('driver-area').value;
+
+      const freeDockIndex = docks.findIndex(d => d.status === 'libre');
+      let assignedDockName = 'Asignado a Zona Standby';
+
+      if (freeDockIndex !== -1) {
+        docks[freeDockIndex].status = 'ocupado';
+        docks[freeDockIndex].rut = rut;
+        docks[freeDockIndex].patente = plate;
+        docks[freeDockIndex].area = area;
+        docks[freeDockIndex].time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        assignedDockName = docks[freeDockIndex].id;
+        renderDocks();
+      }
+
+      document.getElementById('driver-form').classList.add('hidden');
+      const ticket = document.getElementById('driver-ticket');
+      ticket.classList.remove('hidden');
+
+      document.getElementById('ticket-dock-assigned').innerText = assignedDockName;
+      document.getElementById('ticket-info').innerText = `RUT: ${rut} | AREA: ${area}`;
+
+      const qrContainer = document.getElementById('qrcode-ticket');
+      qrContainer.innerHTML = '';
+      new QRCode(qrContainer, {
+        text: `ADES-${rut}-${plate}`,
+        width: 120,
+        height: 120
+      });
+    }
+
+    function resetDriverForm() {
+      document.getElementById('driver-form').reset();
+      document.getElementById('driver-form').classList.remove('hidden');
+      document.getElementById('driver-ticket').classList.add('hidden');
+    }
+
+    function generateGaritaQR() {
+      const modal = document.getElementById('modal-qr');
+      const container = document.getElementById('garita-qr-container');
+      container.innerHTML = '';
+      
+      new QRCode(container, {
+        text: window.location.href,
+        width: 160,
+        height: 160
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModalQR() {
+      document.getElementById('modal-qr').classList.add('hidden');
+    }
+
+    // Inicialización de Gráficos con Datos del Proyecto
+    window.onload = function() {
+      renderDocks();
+
+      // 1. Gráfico Presupuesto vs Real (Julio 2025 - Junio 2026)
+      const ctx1 = document.getElementById('budgetChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: ['Jul', 'Ago', 'Sep', 'Oct', 'Nov (Peak)', 'Dic (Peak)', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun (Peak)'],
+          datasets: [
+            {
+              label: 'Presupuesto ($ MM)',
+              data: [1297, 1297, 1297, 1297, 1388, 1388, 1297, 1297, 1297, 1297, 1297, 1388],
+              borderColor: '#94a3b8',
+              borderDash: [5, 5],
+              fill: false
+            },
+            {
+              label: 'Gasto Real ($ MM)',
+              data: [1280, 1290, 1300, 1320, 1697, 1690, 1270, 1260, 1290, 1310, 1330, 1752],
+              borderColor: '#ef4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              fill: true,
+              tension: 0.3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+
+      // 2. Gráfico Sobregasto Personal (Desviación en Mano de Obra)
+      const ctx2 = document.getElementById('staffChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Mano de obra regular ($392,8 MM)', 'Horas extra ($26,3 MM)', 'Servicios temporales ($20,0 MM)'],
+          datasets: [{
+            data: [392.8, 26.3, 20.0],
+            backgroundColor: ['#10b981', '#f59e0b', '#3b82f6']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+
+      // 3. Gráfico Sobregasto Última Milla en Peak
+      const ctx3 = document.getElementById('lastMileChart').getContext('2d');
+      new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: ['Noviembre (Cyber)', 'Diciembre (Navidad)', 'Junio (Peak)'],
+          datasets: [
+            {
+              label: 'Presupuesto Última Milla ($ MM)',
+              data: [415, 415, 415],
+              backgroundColor: '#cbd5e1'
+            },
+            {
+              label: 'Gasto Real Última Milla ($ MM)',
+              data: [487.6, 527.8, 553.6],
+              backgroundColor: '#3b82f6'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    };
+  </script>
+</body>
+</html>
